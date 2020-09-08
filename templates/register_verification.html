@@ -1,0 +1,216 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Email Confirmation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+  <style type="text/css">
+  /**
+   * Google webfonts. Recommended to include the .woff version for cross-client compatibility.
+   */
+  @media screen {
+    @font-face {
+      font-family: 'Merriweather';
+      font-style: normal;
+      font-weight: 400;
+      src: local('Merriweather'), local('Merriweather'), url(http://fonts.gstatic.com/s/merriweather/v8/ZvcMqxEwPfh2qDWBPxn6nmB7wJ9CoPCp9n30ZBThZ1I.woff) format('woff');
+    }
+
+    @font-face {
+      font-family: 'Merriweather Bold';
+      font-style: normal;
+      font-weight: 700;
+      src: local('Merriweather Bold'), local('Merriweather-Bold'), url(http://fonts.gstatic.com/s/merriweather/v8/ZvcMqxEwPfh2qDWBPxn6nhAPw1J91axKNXP_-QX9CC8.woff) format('woff');
+    }
+  }
+
+  /**
+   * Avoid browser level font resizing.
+   * 1. Windows Mobile
+   * 2. iOS / OSX
+   */
+  body,
+  table,
+  td,
+  a {
+    -ms-text-size-adjust: 100%; /* 1 */
+    -webkit-text-size-adjust: 100%; /* 2 */
+  }
+
+  /**
+   * Remove extra space added to tables and cells in Outlook.
+   */
+  table,
+  td {
+    mso-table-rspace: 0pt;
+    mso-table-lspace: 0pt;
+  }
+
+  /**
+   * Better fluid images in Internet Explorer.
+   */
+  img {
+    -ms-interpolation-mode: bicubic;
+
+  }
+
+  /**
+   * Remove blue links for iOS devices.
+   */
+  a[x-apple-data-detectors] {
+    font-family: inherit !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    line-height: inherit !important;
+    color: inherit !important;
+    text-decoration: none !important;
+  }
+
+  /**
+   * Fix centering issues in Android 4.4.
+   */
+  div[style*="margin: 16px 0;"] {
+    margin: 0 !important;
+  }
+
+  body {
+    width: 100% !important;
+    height: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /**
+   * Collapse table borders to avoid space between cells.
+   */
+  table {
+    border-collapse: collapse !important;
+  }
+
+  a {
+    color: #FF2E2E;
+  }
+
+  img {
+    /* height: auto;
+    line-height: 100%; */
+    text-decoration: none;
+    border: 0;
+    /* width: 10em; */
+    outline: none;
+  }
+  </style>
+
+</head>
+<body>
+
+  <div class="container">
+    <div class="row">
+      <div class="col">
+
+      </div>
+      <div class="col-7">
+        <table border="0" cellpadding="0" cellspacing="0" width="100%">
+          <tr>
+            <td align="center">
+              <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+                <tr>
+                  <td align="left" style="padding: 36px 5px 0; font-family: IBM Plex Sans; ">
+
+                    <h1 style="margin: 0; font-style: normal; font-weight: bold; font-size: 14px; letter-spacing: 0.02px; line-height: 24px; color: #960C0C;">Hi</h1>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr>
+            <td align="center">
+              <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+                <tr>
+                  <td align="left" style="padding: 24px 5px; font-family: IBM Plex Sans; font-style: normal; font-size: 14px; font-weight: normal; line-height: 24px; letter-spacing: 0.02; color: #2B1C1C;">
+                    <p style="margin: 0;">Welcome to Vita Nova Platform</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="left" style="padding: 24px 5px; font-family: IBM Plex Sans; font-style: normal; font-size: 14px; font-weight: normal; line-height: 24px; letter-spacing: 0.02; color: #2B1C1C;">
+                    <p style="margin: 0;">Please, click on the button to verify your email.</p>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="left">
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                      <tr>
+                        <td align="center" style="padding: 12px;">
+                          <table border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                              <td align="center" bgcolor="#FF2E2E" style="border-radius: 4px;">
+                                <a href="{{ verification_url | safe }}" target="_blank" style="display: flex; padding: 16px 36px; font-family: IBM Plex Sans; font-style: normal; font-size: 14px; font-weight: 600; line-height: 24px; color: #ffffff; border-radius: 6px;">Verify Email</a>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td align="left" bgcolor="#ffffff" style="padding: 24px 5px; font-family: IBM Plex Sans; font-style: normal; font-size: 14px; font-weight: normal; line-height: 24px; letter-spacing: 0.02; color: #2B1C1C;">
+                    <p style="margin: 0;">If you can’t click the button, kindly click <a href="{{ verification_url | safe }}"> <b>here</b></a></p>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td align="left" bgcolor="#ffffff" style="padding: 24px 5px; font-family: IBM Plex Sans; font-size: 16px; line-height: 24px; ">
+                    <p style="margin: 0;"><strong>To Talent and Innovation,</strong></p>
+                    <p style="color: #960C0C;"><strong> The Vita Nova Team</strong></p>
+                  </td>
+                </tr>
+
+              </table>
+            </td>
+          </tr>
+              <tr>
+            <td align="center" bgcolor="#FFF2C7" style="padding: 24px;">
+
+              <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+                <tr>
+                  <td align="center" style="padding: 12px 24px; font-family: 'Merriweather', serif; font-size: 14px; line-height: 20px; color: #666;">
+                    <a href="https://twitter.com/semicolonafrica"><img src="https://res.cloudinary.com/semicolon-africa/image/upload/v1588771368/emailpng/socialT_sxxicp.png" alt="socialIcons" border="0" style="width: 25px;"></a>
+                  <a href="https://facebook.com/semicolonafrica"><img  src="https://res.cloudinary.com/semicolon-africa/image/upload/v1588771368/emailpng/socialF_gkwgkj.png" alt="socialIcons" border="0" style="width: 25px; margin-left: 2em;"></a>
+                  <a href="https://instagram.com/semicolonafrica"><img src="https://res.cloudinary.com/semicolon-africa/image/upload/v1588771368/emailpng/socialIG_iblqoa.png" alt="socialIcons" border="0" style="width: 25px; margin-left: 2em;"></a>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center" style="padding: 12px 24px; font-family: IBM Plex Sans; font-style: normal; font-size: 10px; font-weight: normal; line-height: 18px; letter-spacing: 0.02; color: #2B1C1C;">
+                    <p>
+                      235 Ikorodu Rd, <br />Ilupeju<br />Lagos<br /><br />
+                        <a href="#">https://vitanova.africa</a>
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+        </table>
+      </div>
+      <div class="col">
+
+      </div>
+    </div>
+  </div>
+
+
+
+</body>
+</html>
+

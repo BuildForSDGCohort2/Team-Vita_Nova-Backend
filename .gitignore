@@ -165,3 +165,6 @@ pytest*
 
 #requirements
 requirements*
+
+#Database configs
+/vitaNova/settings/production.py

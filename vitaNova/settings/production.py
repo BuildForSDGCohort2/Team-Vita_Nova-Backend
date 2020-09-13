@@ -8,8 +8,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'vitaNova_db',
-        'USER': 'kelly',
-        'PASSWORD': 'iseT<1290',
+        'USER': 'gicheha',
+        'PASSWORD': 'Waithira26',
         'HOST': 'localhost',
         'PORT': '5432',
     }

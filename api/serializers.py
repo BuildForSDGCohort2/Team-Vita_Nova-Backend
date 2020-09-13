@@ -1,3 +1,5 @@
+from abc import ABC
+
 from rest_framework import serializers
 import api.models as am
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer

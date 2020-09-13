@@ -1,9 +1,8 @@
-from abc import ABC
-
 from rest_framework import serializers
-import api.models as am
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_registration.api.serializers import DefaultRegisterUserSerializer
+
+import api.models as am
 
 
 class AppUserSerializer(serializers.ModelSerializer):

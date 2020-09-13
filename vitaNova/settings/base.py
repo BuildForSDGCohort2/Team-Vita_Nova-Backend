@@ -9,16 +9,17 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-import os
-from decouple import config
-from datetime import timedelta
-import cloudinary
 import datetime
+import os
+from datetime import timedelta
+
+import cloudinary
+from decouple import config
+
 # from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = Path(__file__).resolve().parent.parent
-from django.contrib import staticfiles
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 

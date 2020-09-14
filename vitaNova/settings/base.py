@@ -9,15 +9,19 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-import os
-from decouple import config
-from datetime import timedelta
-import cloudinary
 import datetime
-from pathlib import Path
+import os
+from datetime import timedelta
+
+import cloudinary
+from decouple import config
+
+# from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+# BASE_DIR = Path(__file__).resolve().parent.parent
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -27,7 +31,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '9c6dtowzclpt1@m3w@$gqmp!pjl#f#b_%$3#+*#q6*$=k@k4$x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', ]
 
@@ -53,7 +57,6 @@ NOSE_ARGS = [
     '--with-coverage',
 ]
 
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -77,20 +80,20 @@ REST_FRAMEWORK = {
 
 REST_REGISTRATION = {
     'REGISTER_SERIALIZER_CLASS': 'api.serializers.DefaultRegisterUserSerializerCustom',
-    'REGISTER_EMAIL_VERIFICATION_URL': 'https://localhost:3000/verify-email/',  # False,
     'REGISTER_SERIALIZER_PASSWORD_CONFIRM': False,
     'REGISTER_VERIFICATION_ENABLED': True,
     'REGISTER_EMAIL_VERIFICATION_ENABLED': True,
-    'RESET_PASSWORD_VERIFICATION_URL': 'http://localhost:3000/reset-password/',
+    'RESET_PASSWORD_VERIFICATION_URL': 'http://localhost:8000/reset-password/',
     'RESET_PASSWORD_VERIFICATION_PERIOD': timedelta(days=1),
-    'REGISTER_VERIFICATION_URL': 'https://localhost:3000/verify-email/',
+    'REGISTER_VERIFICATION_URL': 'https://localhost:8000/verify-user/',
+    'REGISTER_EMAIL_VERIFICATION_URL': 'https://localhost:8000/verify-email/',
     'REGISTER_VERIFICATION_PERIOD': datetime.timedelta(days=1),
-    'VERIFICATION_FROM_EMAIL': 'nonso@semicolon.africa',
-    #
-    # 'REGISTER_VERIFICATION_EMAIL_TEMPLATES': {
-    #     'subject':  'verification.txt',
-    #     'html_body':  'register_verification.html',
-    # },
+    'VERIFICATION_FROM_EMAIL': config('VERIFICATION_FROM_EMAIL'),
+
+    'REGISTER_VERIFICATION_EMAIL_TEMPLATES': {
+        'subject': 'verification.txt',
+        'html_body': 'register_verification.html',
+    },
 
 }
 
@@ -106,8 +109,7 @@ ROOT_URLCONF = 'vitaNova.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -140,8 +142,16 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# cloudinary settings
+cloudinary.config(
+    cloud_name=config('cloud_name'),
+    api_key=config('api_key'),
+    api_secret=config('api_secret')
+)
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# Email Properties
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = 'smtp.mailtrap.io'
 EMAIL_HOST_USER = 'b12c104177c85f'
@@ -167,7 +177,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, '../templates/media')
 AUTH_USER_MODEL = "api.AppUser"
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = "/static/"

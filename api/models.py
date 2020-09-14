@@ -39,7 +39,7 @@ class UserManager(BaseUserManager):
 
 class AppUser(AbstractUser):
     email = models.EmailField(unique=True)
-    username = models.CharField(max_length=5, default="", unique=False)
+    username = models.CharField(max_length=20, default="", unique=False)
     first_name = models.CharField(max_length=100, null=True)
     last_name = models.CharField(max_length=100, null=True)
     image = models.TextField(null=True,

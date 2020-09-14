@@ -163,5 +163,4 @@ migrations/
 #test
 pytest*
 
-#requirements
-requirements*
+

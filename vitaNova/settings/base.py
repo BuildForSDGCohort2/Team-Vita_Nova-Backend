@@ -23,7 +23,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+#SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = '9c6dtowzclpt1@m3w@$gqmp!pjl#f#b_%$3#+*#q6*$=k@k4$x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -142,13 +143,10 @@ AUTH_PASSWORD_VALIDATORS = [
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-SENDGRID_ECHO_TO_STDOUT = False
-SENDGRID_SANDBOX_MODE_IN_DEBUG = False
-SENDGRID_API_KEY = config('SENDGRID_API_KEY')
-EMAIL_HOST = 'smtp.sendgrid.net'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'apikey'
-EMAIL_HOST_PASSWORD = SENDGRID_API_KEY
+EMAIL_HOST = 'smtp.mailtrap.io'
+EMAIL_HOST_USER = 'b12c104177c85f'
+EMAIL_HOST_PASSWORD = '79c47fe56d8aa1'
+EMAIL_PORT = '2525'
 Enable_USE_TLS = False
 Enable_USE_SSL = True
 

@@ -121,6 +121,7 @@ TEMPLATES = [
     },
 ]
 
+DEBUG = True
 WSGI_APPLICATION = 'vitaNova.wsgi.application'
 
 # Password validation

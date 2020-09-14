@@ -16,12 +16,12 @@ from datetime import timedelta
 import cloudinary
 from decouple import config
 
-# from pathlib import Path
+from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-# BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -32,7 +32,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '0.0.0.0']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '0.0.0.0', 'vitanova.herokuapp.com']
 
 # Application definition
 

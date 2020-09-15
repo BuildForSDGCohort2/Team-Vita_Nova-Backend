@@ -167,4 +167,4 @@ pytest*
 requirements*
 
 #Database configs
-/vitaNova/settings/*
+/vitaNova/settings/

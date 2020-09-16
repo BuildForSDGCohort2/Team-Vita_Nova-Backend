@@ -42,6 +42,11 @@ class AppUser(AbstractUser):
     username = models.CharField(max_length=20, default="", unique=False)
     first_name = models.CharField(max_length=100, null=True)
     last_name = models.CharField(max_length=100, null=True)
+    address = models.CharField(max_length=200, null=True)
+    state = models.CharField(max_length=50, null=True)
+    region = models.CharField(max_length=50, null=True)
+    country = models.CharField(max_length=50, null=True)
+    phone_number = models.CharField(max_length=20, null=True)
     image = models.TextField(null=True,
                              default='https://res.cloudinary.com/dkozdkklg/image/upload/v1565557753/cloudinary_qyi649'
                                      '.jpg')
@@ -54,3 +59,4 @@ class AppUser(AbstractUser):
 
     def __str__(self):
         return self.email
+

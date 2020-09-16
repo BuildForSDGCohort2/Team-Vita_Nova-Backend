@@ -3,11 +3,13 @@ from rest_framework import permissions
 from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 
 import api.models as am
 import api.serializers as aps
+import api.permissions as ap
 
 
 class CustomTokenObtainPairView(TokenObtainPairView):
@@ -55,3 +57,27 @@ class UserViewSets(viewsets.ModelViewSet):
         except Exception as e:
             print(str(e))
             return Response({'status': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ProfileViewSet(viewsets.ViewSet):
+
+    @action(detail=False, permission_classes=[IsAuthenticated, ap.IsOwner])
+    def get_profile(self, request):
+        try:
+            queryset = am.AppUser.objects.get(email=request.user.email)
+            serializer = aps.AppUserSerializer(queryset)
+        except am.AppUser.DoesNotExist:
+            return Response({'message': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=['patch'], permission_classes=[ap.IsOwner, IsAuthenticated])
+    def update_profile(self, request):
+        user = am.AppUser.objects.get(email=request.user.email)
+        serializer = aps.AppUserSerializer(user, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            data = {"message": "User information updated successfully"}
+        else:
+            data = {"message": "An error occurred, check the fields for omission or id duplicate"}
+        return Response(data, status=status.HTTP_200_OK)
+

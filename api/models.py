@@ -47,6 +47,9 @@ class AppUser(AbstractUser):
     region = models.CharField(max_length=50, null=True)
     country = models.CharField(max_length=50, null=True)
     phone_number = models.CharField(max_length=20, null=True)
+    completed_distributions = models.IntegerField(null=True)
+    completed_send_orders = models.IntegerField(null=True)
+    overall_rating = models.FloatField(null=True)
     image = models.TextField(null=True,
                              default='https://res.cloudinary.com/dkozdkklg/image/upload/v1565557753/cloudinary_qyi649'
                                      '.jpg')

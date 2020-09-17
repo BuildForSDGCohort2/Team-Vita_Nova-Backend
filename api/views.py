@@ -1,4 +1,5 @@
 import cloudinary.uploader
+from django.shortcuts import get_object_or_404
 from rest_framework import permissions
 from rest_framework import status
 from rest_framework import viewsets
@@ -41,7 +42,6 @@ class UserViewSets(viewsets.ModelViewSet):
         of the request
         """
 
-        url = ''
         try:
             user = am.AppUser.objects.get(username=request.user.username)
             serializer = aps.UserImageSerializer(data=request.data)
@@ -61,10 +61,14 @@ class UserViewSets(viewsets.ModelViewSet):
 
 class ProfileViewSet(viewsets.ViewSet):
 
-    @action(detail=False, permission_classes=[IsAuthenticated, ap.IsOwner])
+    @action(detail=False, permission_classes=[IsAuthenticated])
     def get_profile(self, request):
         try:
-            queryset = am.AppUser.objects.get(email=request.user.email)
+            if 'email' not in request.data:
+                email = request.user.email
+            else:
+                email = request.data['email']
+            queryset = am.AppUser.objects.get(email=email)
             serializer = aps.AppUserSerializer(queryset)
         except am.AppUser.DoesNotExist:
             return Response({'message': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
@@ -81,3 +85,42 @@ class ProfileViewSet(viewsets.ViewSet):
             data = {"message": "An error occurred, check the fields for omission or id duplicate"}
         return Response(data, status=status.HTTP_200_OK)
 
+
+class UserReviewViewSet(viewsets.ViewSet):
+
+    @action(detail=False, permission_classes=[IsAuthenticated])
+    def get_user_review(self, request):
+        try:
+            if 'user' in request.data:
+                email = request.data['user']
+            else:
+                email = request.user.email
+            user = am.AppUser.objects.get(email=email)
+            queryset = am.UserReview.objects.filter(user=user)
+            serializer = aps.UserReviewSerializer(queryset, many=True)
+            if len(serializer.data) == 0:
+                data = {'message': 'User does not have any review yet'}
+            else:
+                data = serializer.data
+        except am.AppUser.DoesNotExist:
+            return Response({'message': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
+        except am.UserReview.DoesNotExist:
+            return Response({'message': 'User does not have any review yet'}, status=status.HTTP_404_NOT_FOUND)
+        return Response(data=data, status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=['post'], permission_classes=[IsAuthenticated])
+    def post_user_review(self, request, *args, **kwargs):
+        serializer = aps.UserReviewSerializer(data=request.data)
+        if serializer.is_valid():
+            user = am.AppUser.objects.get(id=request.data.get('user'))
+            reviewer = am.AppUser.objects.get(email=request.user.email)
+            if reviewer == user:
+                data = {"message": "Sorry, you can't review yourself"}
+                return Response(data=data, status=status.HTTP_403_FORBIDDEN)
+            else:
+                serializer.save(reviewer=reviewer)
+                data = {"message": "Review added successfully"}
+                return Response(data, status=status.HTTP_201_CREATED)
+        else:
+            data = {"message": "An error occurred, check the fields for omission or duplicates"}
+            return Response(data=data, status=status.HTTP_400_BAD_REQUEST)

@@ -80,6 +80,3 @@ class UserReview(models.Model):
 
     def __str__(self):
         return self.comment
-
-    def __repr__(self):
-        return self.comment

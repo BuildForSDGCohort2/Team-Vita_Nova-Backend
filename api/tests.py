@@ -8,6 +8,7 @@ from api.views import ProfileViewSet, UserReviewViewSet
 
 
 class TestUserProfile(TestCase):
+
     """Test module for the UserProfile ViewSet"""
 
     def setUp(self):
@@ -15,6 +16,7 @@ class TestUserProfile(TestCase):
         try:
             self.test = ProfileViewSet()
         except NameError as e:
+            print(e)
             pass
         am.AppUser.objects.create(
             email='test_user1@vitanova.com',
@@ -76,6 +78,7 @@ class TestUserProfile(TestCase):
 
 
 class TestUserReviewViewSet(TestCase):
+
     """ test modules for User Review """
 
     def setUp(self):
@@ -83,6 +86,7 @@ class TestUserReviewViewSet(TestCase):
         try:
             self.test = UserReviewViewSet()
         except NameError as e:
+            print(e)
             pass
 
         test_user = am.AppUser.objects.create(
@@ -123,8 +127,6 @@ class TestUserReviewViewSet(TestCase):
         self.client.force_authenticate(user=None)
 
     def test_post_user_review(self):
-        user = am.AppUser.objects.get(email='test_user1@vitanova.com')
-        user2 = am.AppUser.objects.get(email='test_user2@vitanova.com')
         data = {
             "comment": "A nice guy",
             "type_of_review": "Sender Review",

@@ -8,15 +8,15 @@ from api.views import ProfileViewSet, UserReviewViewSet
 
 
 class TestUserProfile(TestCase):
-
-    """Test module for the UserProfile ViewSet"""
+    """
+    Test module for the UserProfile ViewSet
+    """
 
     def setUp(self):
         self.client = APIClient()
         try:
             self.test = ProfileViewSet()
         except NameError as e:
-            print(e)
             pass
         am.AppUser.objects.create(
             email='test_user1@vitanova.com',
@@ -78,8 +78,9 @@ class TestUserProfile(TestCase):
 
 
 class TestUserReviewViewSet(TestCase):
-
-    """ test modules for User Review """
+    """
+    test modules for User Review
+    """
 
     def setUp(self):
         self.client = APIClient()

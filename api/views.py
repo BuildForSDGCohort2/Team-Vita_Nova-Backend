@@ -62,6 +62,7 @@ class ProfileViewSet(viewsets.ViewSet):
 
     @action(detail=False, permission_classes=[IsAuthenticated])
     def get_profile(self, request):
+
         try:
             if 'email' not in request.data:
                 email = request.user.email
@@ -75,6 +76,7 @@ class ProfileViewSet(viewsets.ViewSet):
 
     @action(detail=False, methods=['patch'], permission_classes=[ap.IsOwner, IsAuthenticated])
     def update_profile(self, request):
+
         user = am.AppUser.objects.get(email=request.user.email)
         serializer = aps.AppUserSerializer(user, data=request.data, partial=True)
         if serializer.is_valid():
@@ -86,9 +88,13 @@ class ProfileViewSet(viewsets.ViewSet):
 
 
 class UserReviewViewSet(viewsets.ViewSet):
+    """
+    User Review
+    """
 
     @action(detail=False, permission_classes=[IsAuthenticated])
     def get_user_review(self, request):
+
         try:
             if 'user' in request.data:
                 email = request.data['user']
@@ -109,6 +115,7 @@ class UserReviewViewSet(viewsets.ViewSet):
 
     @action(detail=False, methods=['post'], permission_classes=[IsAuthenticated])
     def post_user_review(self, request, *args, **kwargs):
+
         serializer = aps.UserReviewSerializer(data=request.data)
         if serializer.is_valid():
             user = am.AppUser.objects.get(id=request.data.get('user'))
@@ -123,3 +130,4 @@ class UserReviewViewSet(viewsets.ViewSet):
         else:
             data = {"message": "An error occurred, check the fields for omission or duplicates"}
             return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
+

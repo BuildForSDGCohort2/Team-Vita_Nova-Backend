@@ -33,7 +33,8 @@ class Distributor(models.Model):
     status = models.CharField(max_length=100, choices=STATUS, null=True, default="Open")
 
     def __str__(self):
-        return self.departure + " ==> " + self.destination + " by " + self.travel_schedule.strftime('%d-%m-%Y %H:%M:%S')
+        return self.departure + " ==> " + self.destination + " by " \
+               + self.travel_schedule.strftime('%d-%m-%Y %H:%M:%S')
 
 
 class Sender(models.Model):

@@ -4,7 +4,7 @@ import api.models as am
 
 class IsOwner(permissions.BasePermission):
 
-    """    Assumes the model instance has an `owner` attribute.    """
+    """Assumes the model instance has an `owner` attribute."""
 
     def has_permission(self, request, view):
         if request.user.is_anonymous:

@@ -13,9 +13,7 @@ from logic.serializers import SenderSerializer, DistributorSerializer
 
 
 class DistributorViewSet(viewsets.ViewSet):
-    """
-    Distributor
-    """
+    """ Distributor """
 
     @action(detail=False, permission_classes=[IsAuthenticated])
     def get_distributors(self, request):
@@ -63,9 +61,7 @@ class DistributorViewSet(viewsets.ViewSet):
 
 
 class SenderViewSet(viewsets.ViewSet):
-    """
-    Sender
-    """
+    """ Sender """
 
     @action(detail=False, permission_classes=[IsAuthenticated])
     def get_open_send_orders(self, request):

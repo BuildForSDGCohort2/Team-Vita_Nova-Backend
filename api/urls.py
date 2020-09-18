@@ -15,6 +15,7 @@ app_router.register('review', av.UserReviewViewSet, basename='review')
 urlpatterns = [
 
     path('accounts/', include('rest_registration.api.urls')),
+    path('ewallet/', include('ewallet.urls')),
     path('token/jwt', av.CustomTokenObtainPairView.as_view()),
     path('token/jwt/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     path('', include(app_router.urls)),

@@ -35,3 +35,28 @@ class Accounts(models.Model):
         self.user = instance
         self.balance = 0
         self.save()
+
+    def create_account(self, credit = None, debit = None):
+        transaction = Transactions()
+        self.transaction_no = transaction
+
+        balance = None
+        
+        previousRecord = self.objects.get(user=AppUser).last()
+
+        if credit:
+            self.credit = credit
+            balance = previousRecord.balance - credit
+            self.balance = balance
+            transaction.amount = credit
+
+        if debit:
+            self.debit = debit
+            balance = previousRecord.balance + balance
+            self.balance = balance
+            transaction.amount = debit
+        
+        transaction.save()
+        self.save()
+
+        

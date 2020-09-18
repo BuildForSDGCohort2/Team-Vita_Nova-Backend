@@ -167,3 +167,4 @@ requirements*
 
 #Database configs
 /vitaNova/settings/
+vitaNova/settings/base.py

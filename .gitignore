@@ -157,7 +157,6 @@ fabric.properties
 *.pyc*
 /lamp/__pycache__/*
 
-migrations/
 #settings/
 
 #test

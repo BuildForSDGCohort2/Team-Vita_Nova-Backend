@@ -13,8 +13,8 @@ class AppUserSerializer(serializers.ModelSerializer):
                    'is_staff', 'is_superuser', 'last_login')
 
     def create(self, validated_data):
-        appuser = am.AppUser.objects.create_user(**validated_data)
-        return appuser
+        app_user = am.AppUser.objects.create_user(**validated_data)
+        return app_user
 
 
 class UserEmailSerializer(serializers.ModelSerializer):
@@ -30,12 +30,13 @@ class DefaultRegisterUserSerializerCustom(DefaultRegisterUserSerializer):
         model = am.AppUser
 
     def create(self, validated_data, *args):
-        appuser = am.AppUser.objects.create_user(**validated_data)
-        appuser.save()
-        return appuser
+        app_user = am.AppUser.objects.create_user(**validated_data)
+        app_user.save()
+        return app_user
 
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
@@ -48,6 +49,14 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 
 class UserImageSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = am.AppUser
         fields = ('image',)
+
+
+class UserReviewSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = am.UserReview
+        fields = '__all__'

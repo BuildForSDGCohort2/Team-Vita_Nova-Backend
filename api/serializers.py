@@ -6,6 +6,7 @@ import api.models as am
 
 
 class AppUserSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = am.AppUser
         exclude = ('password', 'user_permissions', 'groups',
@@ -17,12 +18,14 @@ class AppUserSerializer(serializers.ModelSerializer):
 
 
 class UserEmailSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = am.AppUser
         fields = ('email',)
 
 
 class DefaultRegisterUserSerializerCustom(DefaultRegisterUserSerializer):
+
     class Meta:
         model = am.AppUser
 
@@ -33,6 +36,7 @@ class DefaultRegisterUserSerializerCustom(DefaultRegisterUserSerializer):
 
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
@@ -45,12 +49,14 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 
 class UserImageSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = am.AppUser
         fields = ('image',)
 
 
 class UserReviewSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = am.UserReview
         fields = '__all__'

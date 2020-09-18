@@ -13,6 +13,7 @@ from logic.serializers import SenderSerializer, DistributorSerializer
 
 
 class DistributorViewSet(viewsets.ViewSet):
+
     """ Distributor """
 
     @action(detail=False, permission_classes=[IsAuthenticated])
@@ -61,6 +62,7 @@ class DistributorViewSet(viewsets.ViewSet):
 
 
 class SenderViewSet(viewsets.ViewSet):
+
     """ Sender """
 
     @action(detail=False, permission_classes=[IsAuthenticated])

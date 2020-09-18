@@ -8,9 +8,8 @@ from api.views import ProfileViewSet, UserReviewViewSet
 
 
 class TestUserProfile(TestCase):
-    """
-    Test module for the UserProfile ViewSet
-    """
+
+    """    Test module for the UserProfile ViewSet    """
 
     def setUp(self):
         self.client = APIClient()
@@ -78,9 +77,8 @@ class TestUserProfile(TestCase):
 
 
 class TestUserReviewViewSet(TestCase):
-    """
-    test modules for User Review
-    """
+
+    """   test modules for User Review   """
 
     def setUp(self):
         self.client = APIClient()

@@ -1,9 +1,8 @@
 from django.conf.urls import include
 from django.urls import path
-from rest_framework_simplejwt import views as jwt_views
-
 from rest_framework import routers
 from rest_framework.routers import DefaultRouter
+
 import logic.views as lv
 
 router = DefaultRouter(trailing_slash=False)

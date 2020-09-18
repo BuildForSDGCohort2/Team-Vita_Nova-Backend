@@ -13,4 +13,3 @@ class SenderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sender
         fields = '__all__'
-

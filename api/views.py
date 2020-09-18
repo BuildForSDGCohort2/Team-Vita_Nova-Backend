@@ -37,8 +37,7 @@ class UserViewSets(viewsets.ModelViewSet):
     def upload_profile_image(self, request):
         """
         image should be passed as a base64 string
-        the the body
-        of the request
+        the the body of the request
         """
 
         try:

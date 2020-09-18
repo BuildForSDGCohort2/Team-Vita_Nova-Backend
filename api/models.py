@@ -3,13 +3,22 @@ from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 
 
+REVIEW_TYPE = (
+    ('Sender Review', 'Sender Review'),
+    ('Distributor Review', 'Distributor Review')
+)
+
+
 class UserManager(BaseUserManager):
+
     """Define a model manager for User model with no username field."""
 
     use_in_migrations = True
 
     def _create_user(self, email, password, **extra_fields):
+
         """Create and save a User with the given email and password."""
+
         if not email:
             raise ValueError('The given email must be set')
         email = self.normalize_email(email)
@@ -19,13 +28,17 @@ class UserManager(BaseUserManager):
         return user
 
     def create_user(self, email, password=None, **extra_fields):
+
         """Create and save a regular User with the given email and password."""
+
         extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', False)
         return self._create_user(email, password, **extra_fields)
 
     def create_superuser(self, email, password, **extra_fields):
+
         """Create and save a SuperUser with the given email and password."""
+
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
 
@@ -49,7 +62,7 @@ class AppUser(AbstractUser):
     phone_number = models.CharField(max_length=20, null=True)
     completed_distributions = models.IntegerField(null=True)
     completed_send_orders = models.IntegerField(null=True)
-    overall_rating = models.FloatField(null=True)
+    overall_rating = models.DecimalField(max_digits=2, decimal_places=1, null=True)
     image = models.TextField(null=True,
                              default='https://res.cloudinary.com/dkozdkklg/image/upload/v1565557753/cloudinary_qyi649'
                                      '.jpg')
@@ -63,3 +76,14 @@ class AppUser(AbstractUser):
     def __str__(self):
         return self.email
 
+
+class UserReview(models.Model):
+    user = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='user')
+    comment = models.TextField(max_length=500)
+    type_of_review = models.CharField(max_length=100, choices=REVIEW_TYPE)
+    reviewer = models.ForeignKey(AppUser, blank=True, null=True, on_delete=models.CASCADE)
+    rating = models.DecimalField(max_digits=2, decimal_places=1, null=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.comment

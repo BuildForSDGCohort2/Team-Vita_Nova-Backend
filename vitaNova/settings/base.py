@@ -12,26 +12,31 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import datetime
 import os
 from datetime import timedelta
+
+import cloudinary
 from decouple import config
 
-# from pathlib import Path
+from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-# BASE_DIR = Path(__file__).resolve().parent.parent
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = config('SECRET_KEY')
-SECRET_KEY = '9c6dtowzclpt1@m3w@$gqmp!pjl#f#b_%$3#+*#q6*$=k@k4$x'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', ]
+ALLOWED_HOSTS = ['127.0.0.1',
+                 'localhost',
+                 '0.0.0.0',
+                 'vitanova.herokuapp.com',
+                 'vitanova.netlify.app',
+                 'localhost:8080/'
+                 ]
 
 # Application definition
 
@@ -48,7 +53,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'api',
     'logic',
-    'ewallet'
+    'ewallet',
 ]
 
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
@@ -58,12 +63,12 @@ NOSE_ARGS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -85,9 +90,9 @@ REST_REGISTRATION = {
     'RESET_PASSWORD_VERIFICATION_URL': 'http://localhost:8080/reset-password/',
     'RESET_PASSWORD_VERIFICATION_PERIOD': timedelta(days=1),
     'REGISTER_VERIFICATION_URL': 'https://localhost:8080/verify-email/',
-    'REGISTER_EMAIL_VERIFICATION_URL': 'https://localhost:8080/verify-email/',
+    'REGISTER_EMAIL_VERIFICATION_URL': 'http://localhost:8080/verify-email/',
     'REGISTER_VERIFICATION_PERIOD': datetime.timedelta(days=1),
-    'VERIFICATION_FROM_EMAIL': "no-reply@vitanova.com",
+    'VERIFICATION_FROM_EMAIL': config('VERIFICATION_FROM_EMAIL'),
 
     'REGISTER_VERIFICATION_EMAIL_TEMPLATES': {
         'subject': 'verification.txt',
@@ -121,6 +126,7 @@ TEMPLATES = [
     },
 ]
 
+DEBUG = True
 WSGI_APPLICATION = 'vitaNova.wsgi.application'
 
 # Password validation
@@ -141,14 +147,23 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# cloudinary settings
+cloudinary.config(
+    cloud_name=config('cloud_name'),
+    api_key=config('api_key'),
+    api_secret=config('api_secret')
+)
+
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Email Properties
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = 'smtp.mailtrap.io'
-EMAIL_HOST_USER = 'b12c104177c85f'
-EMAIL_HOST_PASSWORD = '79c47fe56d8aa1'
-EMAIL_PORT = '2525'
+SENDGRID_ECHO_TO_STDOUT = False
+SENDGRID_SANDBOX_MODE_IN_DEBUG = False
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'apikey'
+EMAIL_HOST_PASSWORD = config('SENDGRID_API_KEY')
 Enable_USE_TLS = False
 Enable_USE_SSL = True
 

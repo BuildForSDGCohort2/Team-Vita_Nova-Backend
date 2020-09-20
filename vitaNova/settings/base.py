@@ -84,7 +84,7 @@ REST_REGISTRATION = {
     'REGISTER_EMAIL_VERIFICATION_ENABLED': True,
     'RESET_PASSWORD_VERIFICATION_URL': 'http://localhost:8080/reset-password/',
     'RESET_PASSWORD_VERIFICATION_PERIOD': timedelta(days=1),
-    'REGISTER_VERIFICATION_URL': 'https://localhost:8080/verify-user/',
+    'REGISTER_VERIFICATION_URL': 'https://localhost:8080/verify-email/',
     'REGISTER_EMAIL_VERIFICATION_URL': 'https://localhost:8080/verify-email/',
     'REGISTER_VERIFICATION_PERIOD': datetime.timedelta(days=1),
     'VERIFICATION_FROM_EMAIL': "no-reply@vitanova.com",

@@ -6,7 +6,7 @@ import requests_async as requests
 from asgiref.sync import async_to_sync, sync_to_async
 from channels.layers import get_channel_layer
 from channels.db import database_sync_to_async
-from .serializers import MessageSerializer
+from api.serializers import MessageSerializer
 from django.utils import timezone
 
 class ChatConsumer(AsyncWebsocketConsumer):

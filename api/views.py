@@ -14,6 +14,8 @@ import api.models as am
 import api.permissions as ap
 import api.serializers as aps
 
+import uuid
+
 from asgiref.sync import async_to_sync
 from channels.layers import get_channel_layer
 from django.utils import timezone

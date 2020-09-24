@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'api',
     'logic',
     'ewallet',
+    'channels',
 ]
 
 TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
@@ -128,6 +129,7 @@ TEMPLATES = [
 
 DEBUG = True
 WSGI_APPLICATION = 'vitaNova.wsgi.application'
+ASGI_APPLICATION = 'vitaNova.routing.application'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -146,6 +148,15 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": ['redis://localhost:6379/4'],
+        },
+    },
+}
 
 # cloudinary settings
 cloudinary.config(

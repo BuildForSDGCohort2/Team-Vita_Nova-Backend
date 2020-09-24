@@ -163,6 +163,9 @@ fabric.properties
 pytest*
 
 #VSCode settings
-settings.json
+.vscode/settings.json
+
 #sqlite
 db.sqlite3
+
+

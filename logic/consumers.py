@@ -91,7 +91,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
     def get_last_messages(self, user):
         chat_rooms = user.chat_rooms.all().order_by('-last_interaction')
-        messages = Message.objects.filter(chat_room__in=chat_rooms).order_by('-date_created')
+        messages = Message.objects.filter(chat_room__in=chat_rooms).order_by('-_created')
         return messages
 
     # Receive message from WebSocket

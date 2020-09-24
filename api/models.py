@@ -2,6 +2,7 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 
+import uuid
 
 REVIEW_TYPE = (
     ('Sender Review', 'Sender Review'),
@@ -87,3 +88,20 @@ class UserReview(models.Model):
 
     def __str__(self):
         return self.comment
+
+class ChatRoom(models.Model):
+    users = models.ManyToManyField(AppUser, related_name='chat_rooms')
+    notice_by_users = models.ManyToManyField(AppUser, related_name = 'chat_room_noticed')
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False, verbose_name='UUID')
+    is_group_chat = models.BooleanField(default = False)
+    last_interaction = models.DateTimeField(auto_now_add=True)
+
+class Message(models.Model):
+    user = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name = 'messages')
+    read_by_users = models.ManyToManyField(AppUser, related_name = 'read_messages')
+    chat_room = models.ForeignKey(ChatRoom, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
+    content = models.TextField()
+
+    def __str__(self):
+        return self.content

@@ -7,9 +7,21 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView
 
+from rest_framework import status
+from rest_framework.decorators import api_view, permission_classes
+
 import api.models as am
 import api.permissions as ap
 import api.serializers as aps
+
+import uuid
+
+from asgiref.sync import async_to_sync
+from channels.layers import get_channel_layer
+from django.utils import timezone
+from django.db.models import Count
+
+import json
 
 
 class CustomTokenObtainPairView(TokenObtainPairView):
@@ -133,3 +145,59 @@ class UserReviewViewSet(viewsets.ViewSet):
             data = {"message": "An error occurred, check the fields for omission or duplicates"}
             return Response(data=data, status=status.HTTP_400_BAD_REQUEST)
 
+def check_user_with_token(request):
+    user_email = request.user.email
+    data = json.loads(request.body.decode('utf-8'))
+    request_email = data['email']
+    if user_email == request_email:
+        return True
+    else:
+        return False
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def check_logged_in(request):
+    user_is_valid = check_user_with_token(request)
+    data = json.loads(request.body.decode('utf-8'))
+    if user_is_valid:
+        chat_rooms = request.user.chat_rooms.all().order_by('-last_interaction')
+        try:
+            if data['chat_room'] == True:
+                for room in chat_rooms:
+                    room.notice_by_users.add(request.user)
+                    room.save()
+                chat_rooms = request.user.chat_rooms.all().order_by('-last_interaction')
+        finally:
+            messages = am.Message.objects.filter(chat_room__in=chat_rooms).order_by('-created')
+            return Response({'message': 'Authorized', 'user': aps.UserSerializer(request.user).data,
+            'messages': aps.MessageSerializer(messages, many=True).data,
+            'chat_rooms': aps.ChatRoomSerializer(chat_rooms, many=True).data}, status=status.HTTP_200_OK)
+    else:
+        return Response({'message': 'Unauthorized'}, status=status.HTTP_401_UNAUTHORIZED)            
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def enter_chat_room(request):
+    user_is_valid = check_user_with_token(request)
+    data = json.loads(request.body.decode('utf-8'))
+    if user_is_valid:
+        target_profile_name = data['profile_name']
+        target_user = am.AppUser.objects.filter(username = target_profile_name)
+        if len(target_user) == 1:
+            # room = ChatRoom.objects.filter(Q(users__icontains = request.user) & Q(users__icontains = target_user[0]) & Q(is_group_chat = False))
+            rooms = request.user.chat_rooms.all()
+            existed_chat_room = None
+            for room in rooms:
+                if target_user[0] in room.users.all() and room.is_group_chat == False:
+                    existed_chat_room = room
+                    break
+            if existed_chat_room != None:
+                return Response({'message': 'Success', 'room': aps.ChatRoomSerializer(existed_chat_room).data}, status=status.HTTP_200_OK)
+            else:
+                new_room = am.ChatRoom.objects.create()
+                new_room.users.add(request.user)
+                new_room.users.add(target_user[0])
+                new_room.save()
+                return Response({'message': 'Created', 'room': aps.ChatRoomSerializer(new_room).data}, status=status.HTTP_201_CREATED)
+    else:
+        return Response({'message': 'Failed'}, status=status.HTTP_400_BAD_REQUEST)

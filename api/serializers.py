@@ -60,3 +60,18 @@ class UserReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = am.UserReview
         fields = '__all__'
+
+class ChatRoomSerializer(serializers.ModelSerializer):
+    users = AppUserSerializer(many=True)
+    notice_by_users = AppUserSerializer(many=True)
+    class Meta:
+        model = am.ChatRoom
+        fields = ['users', 'uuid', 'is_group_chat', 'notice_by_users', 'last_interaction']
+
+class MessageSerializer(serializers.ModelSerializer):
+    user = AppUserSerializer()
+    read_by_users = AppUserSerializer(many = True)
+    chat_room = ChatRoomSerializer()
+    class Meta:
+        model = am.Message
+        fields = ['user', 'read_by_users', 'chat_room', 'created', 'content']

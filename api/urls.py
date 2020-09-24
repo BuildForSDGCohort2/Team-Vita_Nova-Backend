@@ -19,4 +19,6 @@ urlpatterns = [
     path('token/jwt', av.CustomTokenObtainPairView.as_view()),
     path('token/jwt/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     path('', include(app_router.urls)),
+    path('check_logged_in', av.check_logged_in, name='check_logged_in'),
+    path('enter_chat_room', av.enter_chat_room, name='enter_chat_room'),
 ]

@@ -99,7 +99,7 @@ class Message(models.Model):
     user = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name = 'messages')
     read_by_users = models.ManyToManyField(AppUser, related_name = 'read_messages')
     chat_room = models.ForeignKey(ChatRoom, on_delete=models.CASCADE)
-    date_created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(auto_now_add=True)
     content = models.TextField()
 
     def __str__(self):

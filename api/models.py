@@ -2,6 +2,7 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
 
+import uuid
 
 REVIEW_TYPE = (
     ('Sender Review', 'Sender Review'),

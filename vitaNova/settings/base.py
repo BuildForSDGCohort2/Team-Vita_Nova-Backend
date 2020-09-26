@@ -33,7 +33,7 @@ SECRET_KEY = config('SECRET_KEY')
 ALLOWED_HOSTS = ['127.0.0.1',
                  'localhost',
                  'vitanova.herokuapp.com',
-                 'vitanova.netlify.app',
+                 'vita-nova.netlify.app',
                  ]
 
 # Application definition

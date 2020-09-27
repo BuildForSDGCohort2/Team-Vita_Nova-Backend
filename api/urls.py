@@ -11,7 +11,7 @@ app_router = routers.DefaultRouter()
 app_router.register('', av.UserViewSets, 'user')
 app_router.register('profile', av.ProfileViewSet, basename='profile')
 app_router.register('review', av.UserReviewViewSet, basename='review')
-app_router.register('user', av.GetUserViewSets, basename='user')
+# app_router.register('user', av.GetUserViewSets, basename='user')
 
 urlpatterns = [
 

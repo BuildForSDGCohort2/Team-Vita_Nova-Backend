@@ -58,25 +58,25 @@ class UserViewSets(viewsets.ModelViewSet):
             print(str(e))
             return Response({'status': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
-
-class GetUserViewSets(viewsets.ModelViewSet):
-
-    """
-    The user search endpoint searches based on
-    email or username
-    /api/user/filter_user//?s=<value?
-    """
-
-    @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated])
-    def get_user_with_id(self, request):
-
-        try:
-            params = request.query_params.get('id')
-            user = am.AppUser.objects.get(id=params)
-            serializer = aps.AppUserSerializer(user)
-        except am.AppUser.DoesNotExist:
-            return Response({'message': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+#
+# class GetUserViewSets(viewsets.ModelViewSet):
+#
+#     """
+#     The user search endpoint searches based on
+#     email or username
+#     /api/user/filter_user//?s=<value?
+#     """
+#
+#     @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated])
+#     def get_user_with_id(self, request):
+#
+#         try:
+#             params = request.query_params.get('id')
+#             user = am.AppUser.objects.get(id=params)
+#             serializer = aps.AppUserSerializer(user)
+#         except am.AppUser.DoesNotExist:
+#             return Response({'message': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
+#         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 class ProfileViewSet(viewsets.ViewSet):

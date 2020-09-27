@@ -66,24 +66,50 @@ class SenderViewSet(viewsets.ViewSet):
     # Sender
 
     @action(detail=False, permission_classes=[IsAuthenticated])
-    def get_open_send_orders(self, request):
+    def get_send_orders(self, request):
 
         try:
             user = request.user
-            if 'action' in request.data:
-                queryset = Sender.objects.filter(booked_distributor=user, status='Open')
-                serializer = SenderSerializer(queryset, many=True)
-                if len(serializer.data) == 0:
-                    data = {'message': 'Distributor does not have any booked order yet'}
-                else:
-                    data = serializer.data
+            queryset = Sender.objects.filter(user=user, status='Open')
+            serializer = SenderSerializer(queryset, many=True)
+            if len(serializer.data) == 0:
+                data = {'message': 'User does not have any send order yet'}
             else:
-                queryset = Sender.objects.filter(user=user, status='Open')
-                serializer = SenderSerializer(queryset, many=True)
-                if len(serializer.data) == 0:
-                    data = {'message': 'User does not have any send order yet'}
-                else:
-                    data = serializer.data
+                data = serializer.data
+        except AppUser.DoesNotExist:
+            return Response({'message': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
+        except Sender.DoesNotExist:
+            return Response({'message': 'Send order does not exist'}, status=status.HTTP_404_NOT_FOUND)
+        return Response(data=data, status=status.HTTP_200_OK)
+
+    @action(detail=False, permission_classes=[IsAuthenticated])
+    def get_booked_send_orders(self, request):
+
+        try:
+            user = request.user
+            queryset = Sender.objects.filter(booked_distributor=user, status='Open')
+            serializer = SenderSerializer(queryset, many=True)
+            if len(serializer.data) == 0:
+                data = {'message': 'Distributor does not have any booked order yet'}
+            else:
+                data = serializer.data
+        except AppUser.DoesNotExist:
+            return Response({'message': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
+        except Sender.DoesNotExist:
+            return Response({'message': 'Send order does not exist'}, status=status.HTTP_404_NOT_FOUND)
+        return Response(data=data, status=status.HTTP_200_OK)
+
+    @action(detail=False, permission_classes=[IsAuthenticated])
+    def get_delivered_send_orders(self, request):
+
+        try:
+            user = request.user
+            queryset = Sender.objects.filter(booked_distributor=user, status='Close', delivered=True)
+            serializer = SenderSerializer(queryset, many=True)
+            if len(serializer.data) == 0:
+                data = {'message': 'Distributor does not have any delivered order yet'}
+            else:
+                data = serializer.data
         except AppUser.DoesNotExist:
             return Response({'message': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
         except Sender.DoesNotExist:

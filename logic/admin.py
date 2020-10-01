@@ -12,7 +12,7 @@ class DistributorAdmin(admin.ModelAdmin):
 class SenderAdmin(admin.ModelAdmin):
     list_display = ('id', 'created', 'user', 'distributor', 'goods_image', 'departure', 'destination', 'budget',
                     'delivery_contact_number', 'goods_category', 'description_of_goods', 'travel_schedule', 'status',
-                    'accepted_terms')
+                    'accepted_terms', 'active')
 
 
 admin.site.register(lm.Distributor, DistributorAdmin)

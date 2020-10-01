@@ -22,7 +22,7 @@ class DistributorViewSet(viewsets.ViewSet):
         try:
             queryset = []
             distributor_ids = []
-            send_orders = Sender.objects.filter(status='Open')
+            send_orders = Sender.objects.filter(user=request.user, status='Open')
             for send_order in send_orders:
                 distributors = Distributor.objects.filter(departure=send_order.destination,
                                                           destination=send_order.departure,
@@ -91,6 +91,23 @@ class SenderViewSet(viewsets.ViewSet):
             serializer = SenderSerializer(queryset, many=True)
             if len(serializer.data) == 0:
                 data = {'message': 'Distributor does not have any booked order yet'}
+            else:
+                data = serializer.data
+        except AppUser.DoesNotExist:
+            return Response({'message': 'User does not exist'}, status=status.HTTP_404_NOT_FOUND)
+        except Sender.DoesNotExist:
+            return Response({'message': 'Send order does not exist'}, status=status.HTTP_404_NOT_FOUND)
+        return Response(data=data, status=status.HTTP_200_OK)
+
+    @action(detail=False, permission_classes=[IsAuthenticated])
+    def get_active_send_orders(self, request):
+
+        try:
+            user = request.user
+            queryset = Sender.objects.filter(user=user, status='Open', active=True)
+            serializer = SenderSerializer(queryset, many=True)
+            if len(serializer.data) == 0:
+                data = {'message': 'Sender does not have any active order yet'}
             else:
                 data = serializer.data
         except AppUser.DoesNotExist:

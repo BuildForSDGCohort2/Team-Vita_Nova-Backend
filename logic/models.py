@@ -52,6 +52,7 @@ class Sender(models.Model):
     status = models.CharField(max_length=100, choices=STATUS, null=True, default="Open")
     accepted_terms = models.BooleanField(max_length=20, default='', null=True)
     delivered = models.BooleanField(max_length=20, default=False)
+    active = models.BooleanField(max_length=20, default=False)
 
     def __str__(self):
         return self.departure + " to " + self.destination + " by " + self.travel_schedule.strftime('%d-%m-%Y %H:%M:%S')

@@ -10,7 +10,7 @@ class DistributorAdmin(admin.ModelAdmin):
 
 
 class SenderAdmin(admin.ModelAdmin):
-    list_display = ('id', 'created', 'user', 'booked_distributor', 'goods_image', 'departure', 'destination', 'budget',
+    list_display = ('id', 'created', 'user', 'distributor', 'goods_image', 'departure', 'destination', 'budget',
                     'delivery_contact_number', 'goods_category', 'description_of_goods', 'travel_schedule', 'status',
                     'accepted_terms')
 

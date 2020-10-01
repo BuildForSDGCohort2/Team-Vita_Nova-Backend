@@ -24,8 +24,8 @@ class DistributorViewSet(viewsets.ViewSet):
             distributor_ids = []
             send_orders = Sender.objects.filter(user=request.user, status='Open')
             for send_order in send_orders:
-                distributors = Distributor.objects.filter(departure=send_order.destination,
-                                                          destination=send_order.departure,
+                distributors = Distributor.objects.filter(departure=send_order.departure,
+                                                          destination=send_order.destination,
                                                           active_distributor=True,
                                                           travel_schedule__range=[send_order.created,
                                                                                   send_order.travel_schedule])

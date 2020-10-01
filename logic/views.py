@@ -30,10 +30,10 @@ class DistributorViewSet(viewsets.ViewSet):
                                                           travel_schedule__range=[send_order.created,
                                                                                   send_order.travel_schedule])
                 for distributor in distributors:
-                    if len(distributor_ids) == 0:
+                    if len(distributor_ids) == 0 and distributor.user != request.user:
                         queryset.append(distributor)
                         distributor_ids.append(distributor.id)
-                    elif not distributor_ids.__contains__(distributor.id):
+                    elif not distributor_ids.__contains__(distributor.id) and distributor.user != request.user:
                         queryset.append(distributor)
                         distributor_ids.append(distributor.id)
 

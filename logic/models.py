@@ -40,7 +40,7 @@ class Distributor(models.Model):
 class Sender(models.Model):
     goods_image = models.TextField(null=True, default='')
     user = models.ForeignKey(AppUser, on_delete=models.CASCADE, related_name='sender_user', null=True)
-    booked_distributor = models.ForeignKey(AppUser, blank=True, null=True, on_delete=models.CASCADE)
+    distributor = models.ForeignKey(AppUser, blank=True, null=True, related_name='booked_distributor', on_delete=models.CASCADE)
     departure = models.CharField(max_length=100)
     destination = models.CharField(max_length=100)
     budget = models.DecimalField(max_digits=10, decimal_places=2, null=True)

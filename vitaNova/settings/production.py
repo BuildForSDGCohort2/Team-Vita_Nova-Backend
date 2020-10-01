@@ -1,4 +1,5 @@
 from .base import *
+from decouple import config
 
 DEBUG = False
 CORS_ORIGIN_ALLOW_ALL = True
@@ -6,10 +7,10 @@ CONN_MAX_AGE = None
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'vitaNova_db',
-        'USER': 'kelly',
-        'PASSWORD': 'iseT<1290',
+        'ENGINE': config('ENGINE'),
+        'NAME': config('vitaNova_db'),
+        'USER': config('kelly'),
+        'PASSWORD': config('iseT<1290'),
         'HOST': 'localhost',
         'PORT': '5432',
     }

@@ -87,7 +87,7 @@ class SenderViewSet(viewsets.ViewSet):
 
         try:
             user = request.user
-            queryset = Sender.objects.filter(booked_distributor=user, status='Open')
+            queryset = Sender.objects.filter(distributor=user, status='Open')
             serializer = SenderSerializer(queryset, many=True)
             if len(serializer.data) == 0:
                 data = {'message': 'Distributor does not have any booked order yet'}
@@ -104,7 +104,7 @@ class SenderViewSet(viewsets.ViewSet):
 
         try:
             user = request.user
-            queryset = Sender.objects.filter(booked_distributor=user, status='Close', delivered=True)
+            queryset = Sender.objects.filter(distributor=user, status='Close', delivered=True)
             serializer = SenderSerializer(queryset, many=True)
             if len(serializer.data) == 0:
                 data = {'message': 'Distributor does not have any delivered order yet'}
